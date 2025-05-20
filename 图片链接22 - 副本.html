@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>短链精灵 - 短视频平台外链解决方案</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#FF7D00',
+            neutral: {
+              100: '#F5F7FA',
+              200: '#E5E6EB',
+              300: '#C9CDD4',
+              400: '#86909C',
+              500: '#4E5969',
+              600: '#272E3B',
+              700: '#1D2129',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 10px 30px rgba(0, 0, 0, 0.12)',
+          }
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .transition-transform-opacity {
+        transition-property: transform, opacity;
+      }
+      .bg-gradient-blue {
+        background: linear-gradient(135deg, #165DFF 0%, #0040C9 100%);
+      }
+      .clip-path-slant {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-neutral-100 text-neutral-700 min-h-screen flex flex-col">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="#" class="flex items-center">
+            <i class="fa-solid fa-link text-primary text-2xl mr-2"></i>
+            <span class="text-xl font-bold text-neutral-700">短链精灵</span>
+          </a>
+          <nav class="hidden md:ml-10 md:flex space-x-8">
+            <a href="#features" class="text-neutral-600 hover:text-primary transition-colors duration-200 font-medium">功能</a>
+            <a href="#generator" class="text-neutral-600 hover:text-primary transition-colors duration-200 font-medium">生成器</a>
+            <a href="#examples" class="text-neutral-600 hover:text-primary transition-colors duration-200 font-medium">案例</a>
+            <a href="#pricing" class="text-neutral-600 hover:text-primary transition-colors duration-200 font-medium">价格</a>
+          </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="#" class="text-neutral-600 hover:text-primary transition-colors duration-200 hidden sm:block">登录</a>
+          <a href="#" class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+            免费注册
+          </a>
+          <button id="mobile-menu-button" class="md:hidden text-neutral-600 hover:text-primary">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-neutral-200">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary">功能</a>
+        <a href="#generator" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary">生成器</a>
+        <a href="#examples" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary">案例</a>
+        <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary">价格</a>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary">登录</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区 -->
+  <section class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-blue clip-path-slant text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-6">
+            突破平台限制<br>
+            <span class="text-secondary">自由跳转</span> 无障碍
+          </h1>
+          <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-lg">
+            轻松绕过抖音、快手等平台外链限制，将流量精准引导至微信、淘宝等目标平台，提升转化率。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#generator" class="bg-white text-primary hover:bg-neutral-100 px-8 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl font-medium flex items-center">
+              <i class="fa-solid fa-magic mr-2"></i> 立即生成
+            </a>
+            <a href="#how-it-works" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg transition-all duration-200 font-medium flex items-center">
+              <i class="fa-solid fa-play-circle mr-2"></i> 了解原理
+            </a>
+          </div>
+          <div class="mt-10 flex items-center space-x-4">
+            <div class="flex -space-x-2">
+              <img src="https://picsum.photos/id/1001/40/40" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1002/40/40" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1003/40/40" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1004/40/40" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+            </div>
+            <div>
+              <div class="flex items-center">
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                <span class="ml-2 text-sm font-medium">4.9/5</span>
+              </div>
+              <p class="text-sm text-white/80">来自 10,000+ 满意用户</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="relative z-10 bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+            <img src="https://picsum.photos/id/180/600/400" alt="短链精灵生成的跳转链接示例" class="w-full h-auto">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+              <div>
+                <p class="text-white font-medium mb-2">点击下方按钮跳转</p>
+                <button class="bg-secondary hover:bg-secondary/90 text-white px-6 py-2 rounded-lg transition-all duration-200 font-medium">
+                  查看详情
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="absolute top-1/4 -right-4 w-40 h-40 bg-secondary/20 rounded-full filter blur-3xl -z-10"></div>
+          <div class="absolute bottom-1/4 -left-4 w-40 h-40 bg-primary/20 rounded-full filter blur-3xl -z-10"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 功能区 -->
+  <section id="features" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">强大功能，简单操作</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">我们的外链中转站为您提供一站式解决方案，帮助您突破平台限制，实现流量自由流转</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 功能卡片 1 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-image text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">图片上传与处理</h3>
+          <p class="text-neutral-500">支持抖音、快手等平台图片上传，智能适配平台尺寸要求，保持图片高清质量。</p>
+        </div>
+        
+        <!-- 功能卡片 2 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-link text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">智能跳转链接生成</h3>
+          <p class="text-neutral-500">一键生成带跳转按钮的H5链接，用户点击后可无缝跳转至微信、淘宝等目标平台。</p>
+        </div>
+        
+        <!-- 功能卡片 3 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-chart-line text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">数据统计与分析</h3>
+          <p class="text-neutral-500">详细记录链接点击数据，包括点击量、地域分布、访问时间等，助您优化推广策略。</p>
+        </div>
+        
+        <!-- 功能卡片 4 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-mobile-screen-button text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">多平台适配</h3>
+          <p class="text-neutral-500">自动检测用户设备和浏览器环境，提供最佳的跳转体验，支持微信、淘宝、支付宝等。</p>
+        </div>
+        
+        <!-- 功能卡片 5 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-shield text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">安全稳定</h3>
+          <p class="text-neutral-500">采用HTTPS加密技术，确保用户数据安全，服务器分布式部署，保障服务稳定可靠。</p>
+        </div>
+        
+        <!-- 功能卡片 6 -->
+        <div class="bg-white rounded-xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1 border border-neutral-200">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa-solid fa-rocket text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-3">高速加载</h3>
+          <p class="text-neutral-500">优化的H5页面加载速度，平均加载时间小于1秒，提升用户体验，降低跳出率。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作原理 -->
+  <section id="how-it-works" class="py-16 md:py-24 bg-neutral-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">三步轻松搞定</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">简单三步，即可生成绕过平台限制的跳转链接，无需复杂技术知识</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 步骤 1 -->
+        <div class="relative">
+          <div class="bg-white rounded-xl p-8 shadow-md mb-6 relative z-10">
+            <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+              1
+            </div>
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">上传图片</h3>
+            <p class="text-neutral-500">选择您想要展示的图片，支持JPG、PNG等常见格式，系统会自动适配平台尺寸。</p>
+          </div>
+          <div class="hidden md:block absolute top-1/4 -right-6 w-full h-4 bg-primary/20 rounded-full z-0"></div>
+        </div>
+        
+        <!-- 步骤 2 -->
+        <div class="relative">
+          <div class="bg-white rounded-xl p-8 shadow-md mb-6 relative z-10">
+            <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+              2
+            </div>
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">设置目标链接</h3>
+            <p class="text-neutral-500">输入您想要跳转的目标链接，可以是微信公众号、淘宝商品页或任意网页地址。</p>
+          </div>
+          <div class="hidden md:block absolute top-1/4 -right-6 w-full h-4 bg-primary/20 rounded-full z-0"></div>
+        </div>
+        
+        <!-- 步骤 3 -->
+        <div>
+          <div class="bg-white rounded-xl p-8 shadow-md relative z-10">
+            <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+              3
+            </div>
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">获取并分享</h3>
+            <p class="text-neutral-500">系统生成带跳转按钮的H5链接和适配封面图，复制后即可在短视频平台使用。</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-16 text-center">
+        <a href="#generator" class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl font-medium">
+          立即开始使用
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 生成器 -->
+  <section id="generator" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">外链生成器</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">上传图片，设置目标链接，一键生成可跳转的H5页面和适配封面图</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <!-- 左侧表单 -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-xl p-8 shadow-card border border-neutral-200">
+            <h3 class="text-xl font-semibold text-neutral-700 mb-6">基本设置</h3>
+            
+            <div class="mb-6">
+              <label for="platform" class="block text-sm font-medium text-neutral-600 mb-2">选择平台</label>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="relative">
+                  <input type="radio" id="douyin" name="platform" class="peer sr-only" checked>
+                  <label for="douyin" class="block w-full p-4 text-center border border-neutral-300 rounded-lg cursor-pointer hover:bg-neutral-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-colors duration-200">
+                    <i class="fa-brands fa-tiktok text-2xl mb-2"></i>
+                    <span class="block text-sm font-medium">抖音</span>
+                  </label>
+                </div>
+                <div class="relative">
+                  <input type="radio" id="kuaishou" name="platform" class="peer sr-only">
+                  <label for="kuaishou" class="block w-full p-4 text-center border border-neutral-300 rounded-lg cursor-pointer hover:bg-neutral-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-colors duration-200">
+                    <i class="fa-brands fa-connectdevelop text-2xl mb-2"></i>
+                    <span class="block text-sm font-medium">快手</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <label for="image-upload" class="block text-sm font-medium text-neutral-600 mb-2">上传图片</label>
+              <div class="relative border-2 border-dashed border-neutral-300 rounded-lg p-8 text-center hover:border-primary transition-colors duration-200">
+                <input type="file" id="image-upload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                <i class="fa-solid fa-cloud-upload text-4xl text-neutral-400 mb-4"></i>
+                <p class="text-neutral-500 mb-2">点击或拖拽文件到此处上传</p>
+                <p class="text-xs text-neutral-400">支持 JPG, PNG 格式，最大 10MB</p>
+              </div>
+              <div id="preview-container" class="mt-4 hidden">
+                <img id="image-preview" src="" alt="预览图" class="w-full h-auto rounded-lg border border-neutral-200">
+                <button id="remove-image" class="mt-2 text-sm text-red-500 hover:text-red-700 transition-colors duration-200">
+                  <i class="fa-solid fa-trash mr-1"></i> 移除图片
+                </button>
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <label for="target-url" class="block text-sm font-medium text-neutral-600 mb-2">目标链接</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-400">
+                  <i class="fa-solid fa-link"></i>
+                </span>
+                <input type="url" id="target-url" class="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-200" placeholder="https://">
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <label for="button-text" class="block text-sm font-medium text-neutral-600 mb-2">按钮文字</label>
+              <input type="text" id="button-text" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-200" placeholder="立即查看" value="立即查看">
+            </div>
+            
+            <div class="mb-6">
+              <label for="button-color" class="block text-sm font-medium text-neutral-600 mb-2">按钮颜色</label>
+              <div class="grid grid-cols-5 gap-3">
+                <div class="relative">
+                  <input type="radio" id="color-1" name="button-color" class="peer sr-only" checked>
+                  <label for="color-1" class="block w-full h-12 rounded-lg bg-red-500 cursor-pointer peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-red-500 transition-all duration-200"></label>
+                </div>
+                <div class="relative">
+                  <input type="radio" id="color-2" name="button-color" class="peer sr-only">
+                  <label for="color-2" class="block w-full h-12 rounded-lg bg-blue-500 cursor-pointer peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-blue-500 transition-all duration-200"></label>
+                </div>
+                <div class="relative">
+                  <input type="radio" id="color-3" name="button-color" class="peer sr-only">
+                  <label for="color-3" class="block w-full h-12 rounded-lg bg-green-500 cursor-pointer peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-green-500 transition-all duration-200"></label>
+                </div>
+                <div class="relative">
+                  <input type="radio" id="color-4" name="button-color" class="peer sr-only">
+                  <label for="color-4" class="block w-full h-12 rounded-lg bg-yellow-500 cursor-pointer peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-yellow-500 transition-all duration-200"></label>
+                </div>
+                <div class="relative">
+                  <input type="radio" id="color-5" name="button-color" class="peer sr-only">
+                  <label for="color-5" class="block w-full h-12 rounded-lg bg-purple-500 cursor-pointer peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-purple-500 transition-all duration-200"></label>
+                </div>
+              </div>
+            </div>
+            
+            <button id="generate-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center">
+              <i class="fa-solid fa-magic mr-2"></i> 生成链接
+            </button>
+          </div>
+        </div>
+        
+        <!-- 右侧预览 -->
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-xl p-8 shadow-card border border-neutral-200">
+            <h3 class="text-xl font-semibold text-neutral-700 mb-6">预览</h3>
+            
+            <div class="flex justify-center mb-8">
+              <div class="relative w-[280px] h-[560px] bg-neutral-700 rounded-[40px] p-[12px] shadow-xl">
+                <div class="absolute top-[12px] left-1/2 transform -translate-x-1/2 w-[150px] h-[25px] bg-neutral-800 rounded-b-[20px] z-10"></div>
+                <div class="relative w-full h-full bg-neutral-100 rounded-[28px] overflow-hidden">
+                  <!-- 预览内容 -->
+                  <div id="preview-content" class="w-full h-full relative">
+                    <img id="preview-image" src="https://picsum.photos/id/1050/400/800" alt="预览图片" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+                      <p id="preview-text" class="text-white font-medium mb-3">点击下方按钮跳转</p>
+                      <button id="preview-button" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium w-full">
+                        立即查看
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div id="result-container" class="hidden">
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-neutral-600 mb-2">生成的链接</label>
+                <div class="relative">
+                  <input type="text" id="generated-url" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-200" readonly value="https://shortlink.example/abc123">
+                  <button id="copy-url-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1 rounded-lg transition-colors duration-200 text-sm">
+                    <i class="fa-solid fa-copy mr-1"></i> 复制
+                  </button>
+                </div>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-neutral-600 mb-2">封面图</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="border border-neutral-200 rounded-lg overflow-hidden">
+                    <img src="https://picsum.photos/id/1050/400/400" alt="封面图" class="w-full h-auto">
+                    <div class="p-3 bg-neutral-50">
+                      <button class="w-full bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1 rounded-lg transition-colors duration-200 text-sm">
+                        <i class="fa-solid fa-download mr-1"></i> 下载
+                      </button>
+                    </div>
+                  </div>
+                  <div class="border border-neutral-200 rounded-lg overflow-hidden">
+                    <img src="https://picsum.photos/id/1050/400/600" alt="竖版封面图" class="w-full h-auto">
+                    <div class="p-3 bg-neutral-50">
+                      <button class="w-full bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1 rounded-lg transition-colors duration-200 text-sm">
+                        <i class="fa-solid fa-download mr-1"></i> 下载
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap gap-4">
+                <button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg font-medium flex items-center">
+                  <i class="fa-solid fa-share-alt mr-2"></i> 分享
+                </button>
+                <button class="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-6 py-2 rounded-lg transition-all duration-200 font-medium flex items-center">
+                  <i class="fa-solid fa-qrcode mr-2"></i> 生成二维码
+                </button>
+                <button class="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-6 py-2 rounded-lg transition-all duration-200 font-medium flex items-center">
+                  <i class="fa-solid fa-chart-line mr-2"></i> 查看数据
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例展示 -->
+  <section id="examples" class="py-16 md:py-24 bg-neutral-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">成功案例<h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">成功案例</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">看看其他用户如何使用我们的服务提升转化率和流量</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 案例 1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1">
+          <div class="relative">
+            <img src="https://picsum.photos/id/26/600/400" alt="电商案例" class="w-full h-64 object-cover">
+            <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+              电商
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">某淘宝店主</h3>
+            <p class="text-neutral-500 mb-4">通过我们的外链服务，将抖音流量引导至淘宝店铺，月销售额提升了320%。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center">
+                <i class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+                <span class="text-green-500 font-medium">320%</span>
+              </div>
+              <a href="#" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                查看详情 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 案例 2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1">
+          <div class="relative">
+            <img src="https://picsum.photos/id/96/600/400" alt="教育案例" class="w-full h-64 object-cover">
+            <div class="absolute top-4 left-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+              教育
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">某在线教育机构</h3>
+            <p class="text-neutral-500 mb-4">利用我们的服务在快手推广课程，微信公众号关注量增长了150%，课程转化率提升58%。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center">
+                <i class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+                <span class="text-green-500 font-medium">150%</span>
+              </div>
+              <a href="#" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                查看详情 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 案例 3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-1">
+          <div class="relative">
+            <img src="https://picsum.photos/id/60/600/400" alt="个人IP案例" class="w-full h-64 object-cover">
+            <div class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+              个人IP
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-neutral-700 mb-3">某抖音网红</h3>
+            <p class="text-neutral-500 mb-4">通过我们的外链服务，成功将抖音粉丝导流至微信，私域流量池增长5000+人/月。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center">
+                <i class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+                <span class="text-green-500 font-medium">5000+</span>
+              </div>
+              <a href="#" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                查看详情 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 价格方案 -->
+  <section id="pricing" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">价格方案</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">选择适合您的套餐，开启无限制的外链推广之旅</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 免费版 -->
+        <div class="bg-white rounded-xl p-8 shadow-card border border-neutral-200 transition-all duration-300 hover:shadow-card-hover">
+          <h3 class="text-xl font-semibold text-neutral-700 mb-2">免费版</h3>
+          <p class="text-neutral-500 mb-6">适合个人用户和小型业务</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-neutral-700">¥0</span>
+            <span class="text-neutral-500">/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>每月生成5个跳转链接</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>基础数据分析</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>5MB图片上传限制</span>
+            </li>
+            <li class="flex items-start text-neutral-400">
+              <i class="fa-solid fa-times text-neutral-400 mt-1 mr-3"></i>
+              <span>自定义品牌标识</span>
+            </li>
+            <li class="flex items-start text-neutral-400">
+              <i class="fa-solid fa-times text-neutral-400 mt-1 mr-3"></i>
+              <span>优先技术支持</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full text-center bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium py-3 px-4 rounded-lg transition-all duration-200">
+            免费开始
+          </a>
+        </div>
+        
+        <!-- 专业版 -->
+        <div class="bg-white rounded-xl p-8 shadow-card border-2 border-primary relative transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-1">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-4 py-1 rounded-full">
+            最受欢迎
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-700 mb-2">专业版</h3>
+          <p class="text-neutral-500 mb-6">适合企业和专业营销人员</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-neutral-700">¥99</span>
+            <span class="text-neutral-500">/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>每月生成200个跳转链接</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>详细数据分析</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>50MB图片上传限制</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>自定义品牌标识</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>优先技术支持</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full text-center bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+            选择专业版
+          </a>
+        </div>
+        
+        <!-- 企业版 -->
+        <div class="bg-white rounded-xl p-8 shadow-card border border-neutral-200 transition-all duration-300 hover:shadow-card-hover">
+          <h3 class="text-xl font-semibold text-neutral-700 mb-2">企业版</h3>
+          <p class="text-neutral-500 mb-6">适合大型企业和机构</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-neutral-700">¥299</span>
+            <span class="text-neutral-500">/月</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>无限制跳转链接生成</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>高级数据分析和报告</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>200MB图片上传限制</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>高级自定义品牌标识</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i>
+              <span>24/7专属技术支持</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full text-center bg-neutral-800 hover:bg-neutral-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200">
+            选择企业版
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题 -->
+  <section class="py-16 md:py-24 bg-neutral-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-700 mb-4">常见问题</h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-lg">了解更多关于我们服务的信息</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-4">
+          <!-- FAQ 1 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center p-5 text-left focus:outline-none">
+              <span class="font-medium text-neutral-700">这个服务是否违反抖音/快手平台规则？</span>
+              <i class="fa-solid fa-chevron-down text-neutral-400 transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden px-5 pb-5">
+              <p class="text-neutral-500">
+                我们的服务严格遵守各平台规则，通过技术手段实现合规的流量引导。我们不鼓励任何违反平台规则的行为，请确保您的内容符合相关平台的规定。
+              </p>
+            </div>
+          </div>
+          
+          <!-- FAQ 2 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center p-5 text-left focus:outline-none">
+              <span class="font-medium text-neutral-700">生成的链接有效期是多久？</span>
+              <i class="fa-solid fa-chevron-down text-neutral-400 transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden px-5 pb-5">
+              <p class="text-neutral-500">
+                免费版生成的链接有效期为30天，专业版和企业版生成的链接永久有效。您可以随时在后台管理和更新您的链接。
+              </p>
+            </div>
+          </div>
+          
+          <!-- FAQ 3 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center p-5 text-left focus:outline-none">
+              <span class="font-medium text-neutral-700">如何查看链接的点击数据？</span>
+              <i class="fa-solid fa-chevron-down text-neutral-400 transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden px-5 pb-5">
+              <p class="text-neutral-500">
+                登录您的账户后，在"数据统计"页面可以查看所有链接的详细数据，包括点击量、地域分布、访问时间、设备类型等信息。专业版和企业版提供更详细的数据分析功能。
+              </p>
+            </div>
+          </div>
+          
+          <!-- FAQ 4 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center p-5 text-left focus:outline-none">
+              <span class="font-medium text-neutral-700">是否支持跳转至微信小程序？</span>
+              <i class="fa-solid fa-chevron-down text-neutral-400 transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden px-5 pb-5">
+              <p class="text-neutral-500">
+                是的，我们的服务支持跳转至微信小程序。您可以在生成链接时选择"微信小程序"作为目标类型，并提供相应的小程序路径和参数。
+              </p>
+            </div>
+          </div>
+          
+          <!-- FAQ 5 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center p-5 text-left focus:outline-none">
+              <span class="font-medium text-neutral-700">图片可以自定义编辑吗？</span>
+              <i class="fa-solid fa-chevron-down text-neutral-400 transition-transform duration-200"></i>
+            </button>
+            <div class="faq-content hidden px-5 pb-5">
+              <p class="text-neutral-500">
+                专业版和企业版用户可以使用我们的在线图片编辑器对上传的图片进行简单编辑，包括裁剪、调整亮度/对比度、添加文字和水印等功能。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部CTA -->
+  <section class="py-16 md:py-24 bg-gradient-blue text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6">立即开始突破平台限制</h2>
+      <p class="text-white/90 text-lg max-w-2xl mx-auto mb-10">
+        注册短链精灵，轻松绕过平台外链限制，将流量精准引导至微信、淘宝等目标平台，提升转化率
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#generator" class="bg-white text-primary hover:bg-neutral-100 px-8 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl font-medium">
+          免费试用14天
+        </a>
+        <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg transition-all duration-200 font-medium">
+          联系销售顾问
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-neutral-800 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-6">
+            <i class="fa-solid fa-link text-primary text-2xl mr-2"></i>
+            <span class="text-xl font-bold">短链精灵</span>
+          </div>
+          <p class="text-neutral-400 mb-6">
+            突破平台限制，实现流量自由流转的专业外链解决方案。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">
+              <i class="fa-brands fa-weixin text-xl"></i>
+            </a>
+            <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">
+              <i class="fa-brands fa-weibo text-xl"></i>
+            </a>
+            <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">
+              <i class="fa-brands fa-qq text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">产品</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">外链生成器</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">数据统计</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">图片处理</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">价格方案</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">资源</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">帮助中心</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">使用教程</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">案例展示</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">API文档</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-6">公司</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">关于我们</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">联系我们</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">隐私政策</a></li>
+            <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-200">服务条款</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-neutral-700 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-neutral-500 text-sm mb-4 md:mb-0">
+            &copy; 2025 短链精灵. 保留所有权利.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-neutral-500 hover:text-white text-sm transition-colors duration-200">隐私政策</a>
+            <a href="#" class="text-neutral-500 hover:text-white text-sm transition-colors duration-200">服务条款</a>
+            <a href="#" class="text-neutral-500 hover:text-white text-sm transition-colors duration-200">Cookie政策</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        navbar.classList.add('shadow-md');
+        navbar.classList.remove('shadow-sm');
+      } else {
+        navbar.classList.remove('shadow-md');
+        navbar.classList.add('shadow-sm');
+      }
+    });
+    
+    // 移动端菜单切换
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动端菜单
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        }
+      });
+    });
+    
+    // FAQ 切换
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const content = toggle.nextElementSibling;
+        const icon = toggle.querySelector('i');
+        
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+      });
+    });
+    
+    // 外链生成器功能
+    const imageUpload = document.getElementById('image-upload');
+    const previewContainer = document.getElementById('preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const removeImage = document.getElementById('remove-image');
+    const targetUrl = document.getElementById('target-url');
+    const buttonText = document.getElementById('button-text');
+    const previewButton = document.getElementById('preview-button');
+    const generateBtn = document.getElementById('generate-btn');
+    const resultContainer = document.getElementById('result-container');
+    const generatedUrl = document.getElementById('generated-url');
+    const copyUrlBtn = document.getElementById('copy-url-btn');
+    
+    // 图片上传预览
+    imageUpload.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          previewContainer.classList.remove('hidden');
+        }
+        
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+    
+    // 移除图片
+    removeImage.addEventListener('click', () => {
+      imageUpload.value = '';
+      imagePreview.src = '';
+      previewContainer.classList.add('hidden');
+    });
+    
+    // 更新预览按钮文字
+    buttonText.addEventListener('input', () => {
+      previewButton.textContent = buttonText.value;
+    });
+    
+    // 生成链接
+    generateBtn.addEventListener('click', () => {
+      if (!imageUpload.files[0]) {
+        alert('请上传图片');
+        return;
+      }
+      
+      if (!targetUrl.value) {
+        alert('请输入目标链接');
+        return;
+      }
+      
+      // 模拟生成链接
+      const randomId = Math.random().toString(36).substring(2, 10);
+      generatedUrl.value = `https://shortlink.example/${randomId}`;
+      
+      // 显示结果
+      resultContainer.classList.remove('hidden');
+      
+      // 平滑滚动到结果区域
+      resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    
+    // 复制链接
+    copyUrlBtn.addEventListener('click', () => {
+      generatedUrl.select();
+      document.execCommand('copy');
+      
+      // 提示复制成功
+      const originalText = copyUrlBtn.innerHTML;
+      copyUrlBtn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> 已复制';
+      
+      setTimeout(() => {
+        copyUrlBtn.innerHTML = originalText;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+    
